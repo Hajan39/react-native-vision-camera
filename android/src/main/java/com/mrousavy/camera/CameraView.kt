@@ -72,7 +72,7 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
     const val TAG = "CameraView"
     const val TAG_PERF = "CameraView.performance"
 
-    private val propsThatRequireSessionReconfiguration = arrayListOf("cameraId", "format", "fps", "hdr", "lowLightBoost", "photo", "video", "enableFrameProcessor")
+    private val propsThatRequireSessionReconfiguration = arrayListOf("cameraId", "flashMode" , "format", "fps", "hdr", "lowLightBoost", "photo", "video", "enableFrameProcessor")
     private val arrayListOfZoom = arrayListOf("zoom")
   }
 
@@ -95,6 +95,7 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
   var lowLightBoost: Boolean? = null // nullable bool
   // other props
   var isActive = false
+  var flashMode = "off"; 
   var torch = "off"
   var zoom: Float = 1f // in "factor"
   var orientation: String? = null
@@ -444,6 +445,14 @@ class CameraView(context: Context, private val frameProcessorThread: ExecutorSer
         }
       }
 
+      val modeFlash = when (flashMode) {
+        "on" -> ImageCapture.FLASH_MODE_ON
+        "off" -> ImageCapture.FLASH_MODE_OFF
+        "auto" -> ImageCapture.FLASH_MODE_AUTO
+        else -> throw InvalidTypeScriptUnionError("flash", flashMode ?: "(null)")
+      }
+      Log.i(TAG, "Setting Flash Mode $flashMode to ImageCaptureBuilder $modeFlash")
+      imageCaptureBuilder.setFlashMode(modeFlash)
 
       // Unbind use cases before rebinding
       videoCapture = null

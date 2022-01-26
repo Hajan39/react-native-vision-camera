@@ -42,6 +42,13 @@ class CameraViewManager(reactContext: ReactApplicationContext) : ViewGroupManage
     view.cameraId = cameraId
   }
 
+  @ReactProp(name = "flashMode")
+  fun setFlashMode(view: CameraView, flashMode: String) {
+    if (view.flashMode != flashMode)
+      addChangedPropToTransaction(view, "flashMode")
+    view.flashMode = flashMode
+  }
+
   @ReactProp(name = "photo")
   fun setPhoto(view: CameraView, photo: Boolean?) {
     if (view.photo != photo)

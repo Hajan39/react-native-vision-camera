@@ -41,6 +41,10 @@ export interface CameraProps extends ViewProps {
 
   //#region Use-cases
   /**
+   * Set **flash mode** of next image 
+   */
+  flashMode?: "on" | "off" | "auto";
+  /**
    * Enables **photo capture** with the `takePhoto` function (see ["Taking Photos"](https://mrousavy.github.io/react-native-vision-camera/docs/guides/capturing#taking-photos))
    */
   photo?: boolean;
